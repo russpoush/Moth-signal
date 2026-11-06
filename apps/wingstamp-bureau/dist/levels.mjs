@@ -1,8 +1,10 @@
-const nest={id:'nest',name:'Bureau',x:50,y:84};
+const nest={id:'nest',name:'Home',x:50,y:84};
 const spots={A:{name:'Fern',x:20,y:61},B:{name:'Willow',x:20,y:24},C:{name:'Birch',x:80,y:24},D:{name:'Clover',x:80,y:61},E:{name:'Moon',x:50,y:12}};
 function level(id,title,word,cycles,edges,lesson){return {id,title,word,lesson,nodes:[nest,...Object.entries(cycles).map(([id,stamps])=>({id,...spots[id],stamps:[...stamps]}))],edges:edges.map(e=>e.split('-'))};}
 export const LEVELS=[
- level('first-post','Your first post','MAIL',{A:'MI',B:'A',C:'L'},['nest-A','A-B','A-C','C-nest'],'Fern stamps M first, then I when you return. Start at Fern, visit Willow, then revisit Fern. Finish at Birch and return to the Bureau.'),
+ level('hello-post','Say hello','HI',{A:'H',B:'I'},['nest-A','A-B','B-nest'],'Tap H, then I, then Home. The large green button can guide every step. These letters stay the same.'),
+ level('cat-post','A little CAT','CAT',{A:'C',B:'A',C:'T'},['nest-A','A-B','B-C','C-nest'],'Collect C, then A, then T. Follow the NEXT marker, then take your moth Home.'),
+ level('first-post','A changing letter','MAIL',{A:'MI',B:'A',C:'L'},['nest-A','A-B','A-C','C-nest'],'Fern stamps M first, then I when you return. Start at Fern, visit Willow, then revisit Fern. Finish at Birch and return to the Bureau.'),
  level('wing-shift','A change of wings','WING',{A:'WN',B:'I',D:'G'},['nest-A','A-B','A-D','D-nest'],'A perch remembers your last visit. Watch the small “then” letter to plan your return.'),
  level('double-loop','Two little loops','LETTER',{A:'LT',B:'ET',C:'ER'},['nest-A','A-B','A-C','B-C','C-nest'],'Both Fern and Willow change. The shortest path does not always take the closest-looking perch.'),
  level('moon-mail','Moon mail','MOON',{A:'MO',B:'O',C:'N',D:'OX'},['nest-A','A-B','A-D','A-C','C-nest','D-C'],'Two perches offer O. Explore both routes, and watch Fern change from M to O. Undo is always free.'),

@@ -49,8 +49,8 @@ The **Wingstamp-Bureau-iOS-Simulator** artifact is for a Mac's iOS Simulator onl
 
 ## Play
 
-Tap a perch connected by a dotted line. It stamps the large letter onto your receipt and changes to its “then” letter. Fill the target word in order and return to the Bureau. In the first route, tap **Fern → Willow → Fern → Birch → Bureau** to deliver MAIL. Undo and reset are free. All routes can be selected from Tonight's postbag.
+Start with **HI**. Leave **Guide me** on and tap the big green button three times: H, I, then Home. You can also tap the stop marked NEXT on the map. CAT is the next gentle practice word. Only later deliveries introduce letters that change after a visit. Go back and Start over are free; guided play blocks paths that would leave you stuck. Turn Guide me off whenever you want to plan independently. All words are available under Choose a word.
 
 ## What has been checked
 
-Eight Node tests validate all eight levels, require changed-perch revisits, verify rule transitions, wrong moves, dead ends, undo state, saved progress, and a simulated touch-button UI completing all routes. The native CI separately compiles Android Debug and an unsigned iOS Simulator app. Those are build checks, not physical-device playtests. Browser visual QA and real-device touch/rotation/safe-area testing still need the devices.
+Eight Node tests validate all ten levels, keep the first two static, require changed-perch revisits on later routes, verify rule transitions, wrong moves, dead ends, undo state, saved progress, and a simulated touch-button UI completing all routes, guiding each hop, avoiding traps, recovering from independent-play dead ends and preserving earlier progress. The native CI separately compiles Android Debug and an unsigned iOS Simulator app. Those are build checks, not physical-device playtests. Browser visual QA and real-device touch/rotation/safe-area testing still need the devices.

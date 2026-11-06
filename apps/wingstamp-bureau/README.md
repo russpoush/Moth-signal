@@ -2,7 +2,7 @@
 
 A mobile puzzle about a paper moth and very serious paperwork. Each perch stamps a letter, then advances its own stamp. Revisit perches to fill a receipt and return home.
 
-Eight solver-checked routes. Offline. Touch controls, undo, hints and local progress. Android and iOS projects use Capacitor 8.6.0.
+Ten solver-checked routes, starting with HI and CAT. Guide me is on by default: the next stop is marked NEXT, and one large button guides each hop. Later deliveries gradually introduce changing letters. Larger text and controls, free undo, optional independent play and saved progress. Offline. Android and iOS projects use Capacitor 8.6.0.
 
 - [Test on Android or iPhone](../../docs/wingstamp/TEST-ON-YOUR-PHONE.md)
 - [Originality research and limits](../../docs/wingstamp/ORIGINALITY.md)

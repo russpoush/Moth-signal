@@ -11,11 +11,11 @@ export function stampAt(level,state,id){const n=level.nodes.find(n=>n.id===id);r
 export function isDelivered(level,state){return state.receipt===level.word&&state.at==='nest';}
 export function adjacent(level,from,to){return level.edges.some(([a,b])=>(a===from&&b===to)||(b===from&&a===to));}
 export function move(level,state,to){
- if(isDelivered(level,state))return {ok:false,reason:'This delivery is complete. Choose the next route.'};
- if(!level.nodes.some(n=>n.id===to))return {ok:false,reason:'That perch is not on this route.'};
- if(!adjacent(level,state.at,to))return {ok:false,reason:'Follow a dotted route from your current perch.'};
+ if(isDelivered(level,state))return {ok:false,reason:'You delivered the word! Try the next one when you are ready.'};
+ if(!level.nodes.some(n=>n.id===to))return {ok:false,reason:'That stop is not in this delivery.'};
+ if(!adjacent(level,state.at,to))return {ok:false,reason:'That stop is too far away. Follow a dotted line, or use the big green button.'};
  const letter=stampAt(level,state,to);
- if(to!=='nest'&&letter!==level.word[state.receipt.length])return {ok:false,reason:state.receipt.length===level.word.length?'The receipt is complete. Return to the nest without another stamp.':`Next you need ${level.word[state.receipt.length]}. This perch currently stamps ${letter}. Try another route or undo.`};
+ if(to!=='nest'&&letter!==level.word[state.receipt.length])return {ok:false,reason:state.receipt.length===level.word.length?'You have every letter! Go Home to finish.':`Next, collect ${level.word[state.receipt.length]}. That stop gives ${letter}. Try the marked stop, or go back.`};
  const next={at:to,receipt:state.receipt+(letter??''),turns:state.turns+1,cycles:{...state.cycles}};
  if(letter){const node=level.nodes.find(n=>n.id===to);next.cycles[to]=(next.cycles[to]+1)%node.stamps.length;}
  return {ok:true,state:next,letter};
