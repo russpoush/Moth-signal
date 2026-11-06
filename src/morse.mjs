@@ -1,0 +1,6 @@
+export const MORSE = Object.freeze({A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.'});
+export const WORDS = Object.freeze(['MOTH','LAMP','MOON','GLOW','DUSK','WING','BEAM','DARK','NEST','STAR']);
+export function encode(word) { const normalized=String(word).trim().toUpperCase(); if(!/^[A-Z0-9]+$/.test(normalized)) throw new Error('Use letters or numbers only.'); return [...normalized].map(c=>MORSE[c]).join(' '); }
+export function timeline(word,wpm=12) { if(!Number.isFinite(wpm)||wpm<5||wpm>30)throw new Error('Speed must be 5–30 WPM.'); const unit=1.2/wpm; let time=0; const pulses=[]; for(const [i,letter] of [...String(word).trim().toUpperCase()].entries()){const code=encode(letter); if(i)time+=2*unit; for(const symbol of code){const duration=(symbol==='.'?1:3)*unit;pulses.push({start:time,duration});time+=duration+unit;}} return {pulses,duration:time-unit,unit}; }
+export function isCorrect(answer,target){return String(answer).trim().toUpperCase()===target;}
+export function scoreRound(correct,hinted){return correct?(hinted?1:3):0;}
