@@ -1,0 +1,65 @@
+name: Moth Signal mobile test builds
+on:
+  push:
+    branches: [wingstamp-mobile]
+    paths: ['apps/moth-signal/**', '.github/workflows/moth-signal-mobile.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: moth-signal-mobile-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/moth-signal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/moth-signal/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - run: npm test
+      - run: npm run sync
+      - run: ./gradlew assembleDebug --no-daemon
+        working-directory: apps/moth-signal/android
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Moth-Signal-Android-debug
+          path: apps/moth-signal/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+  ios-simulator:
+    runs-on: macos-26
+    defaults:
+      run:
+        working-directory: apps/moth-signal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/moth-signal/package-lock.json
+      - run: xcodebuild -version
+      - run: npm ci
+      - run: npm test
+      - run: npm run sync
+      - name: Build unsigned iOS Simulator app
+        run: xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath ios/App/build CODE_SIGNING_ALLOWED=NO build
+      - name: Package simulator app
+        run: ditto -c -k --sequesterRsrc --keepParent ios/App/build/Build/Products/Debug-iphonesimulator/App.app Moth-Signal-iOS-Simulator.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Moth-Signal-iOS-Simulator
+          path: apps/moth-signal/Moth-Signal-iOS-Simulator.zip
+          if-no-files-found: error
+          retention-days: 30
