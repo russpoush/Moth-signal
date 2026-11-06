@@ -49,6 +49,10 @@ The **Moth-Signal-iOS-Simulator** artifact contains a Simulator `.app`, not an i
 
 ## Play
 
-Press Play signal, decode one of the listed words, enter it and tap Send. The Morse chart is always expanded below the answer controls; the guide link jumps to it. Speed and Sound controls are above the answer. Written hints reduce a correct round from 3 points to 1. Replays and wrong guesses have no penalty. Complete five signals to finish a shift.
+Press Play signal, decode one of the listed words, enter it and tap Send. The Morse chart is always expanded below the answer controls; the guide link jumps to it. Speed and Sound controls are above the answer. The optional Reveal hint reduces a correct round from 3 points to 1. For accessible written-only play, switch off both Sound and Flashes; that mode keeps full points. Replays and wrong guesses have no penalty. Complete five signals to finish a shift.
 
 This is a development test build, not an App Store or Google Play release. Physical-device audio, touch and visual testing remains outstanding.
+
+## Updating a debug installation
+
+Fresh CI runners or a different local computer may sign debug APKs with different keys. If Android reports `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `adb install -r` cannot replace that installation. Build with the same signing key, or uninstall the earlier test app before installing the new APK. Uninstalling may remove local progress; OS backups may later restore it. No signing key is stored in this repository.

@@ -2,7 +2,7 @@ name: Wingstamp mobile test builds
 on:
   push:
     branches: [wingstamp-mobile]
-    paths: ['apps/wingstamp-bureau/**', '.github/workflows/wingstamp-mobile.yml']
+    paths: ['apps/wingstamp-bureau/**', '.github/workflows/wingstamp-mobile.yml', 'scripts/verify-native-bundle.py']
   workflow_dispatch:
 permissions:
   contents: read
@@ -31,6 +31,11 @@ jobs:
       - run: npm run sync
       - run: ./gradlew assembleDebug --no-daemon
         working-directory: apps/wingstamp-bureau/android
+      - name: Verify APK signature and packaged game assets
+        run: |
+          apk_verifier=$(rg --files "$ANDROID_HOME/build-tools" | rg '/apksigner$' | sort -V | tail -n 1)
+          "$apk_verifier" verify --verbose --print-certs android/app/build/outputs/apk/debug/app-debug.apk
+          python ../../scripts/verify-native-bundle.py android android/app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
           name: Wingstamp-Bureau-Android-debug
@@ -55,6 +60,11 @@ jobs:
       - run: npm run sync
       - name: Build unsigned iOS Simulator app
         run: xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath ios/App/build CODE_SIGNING_ALLOWED=NO build
+      - name: Verify simulator resources and architecture
+        run: |
+          python ../../scripts/verify-native-bundle.py ios ios/App/build/Build/Products/Debug-iphonesimulator/App.app
+          file ios/App/build/Build/Products/Debug-iphonesimulator/App.app/App
+          lipo -info ios/App/build/Build/Products/Debug-iphonesimulator/App.app/App
       - name: Package simulator app
         run: ditto -c -k --sequesterRsrc --keepParent ios/App/build/Build/Products/Debug-iphonesimulator/App.app Wingstamp-Bureau-iOS-Simulator.zip
       - uses: actions/upload-artifact@v4

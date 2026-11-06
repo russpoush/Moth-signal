@@ -11,3 +11,5 @@ ios/App/DerivedData/
 *.jks
 *.keystore
 Moth-Signal-*.zip
+
+native-verification.json

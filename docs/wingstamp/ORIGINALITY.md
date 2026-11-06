@@ -8,7 +8,7 @@ Two research agents separately reviewed the proposed name and mechanics before f
 
 - [Mosslight Post Office](https://zendenclaws.itch.io/mosslight-post-office): cozy moth postal route planning. The published description does not describe independent cyclic letter stamps.
 - [TYPING](https://typing2122.itch.io/typing): movement paths form a word; changing letter state is carried by a rolling die rather than each perch.
-- [Letterfall: Word Stamps](https://apps.apple.com/ca/app/letterfall-word-stamps/id6828188640): stamp/word presentation, with falling and rearranged letters rather than revisited graph perches.
+- [Letterfall: Word Stamps](https://apps.apple.com/ca/app/letterfall-word-stamps/id6828188640): stamp/word presentation, by removing one letter and rearranging the remainder into shorter words rather than revisiting graph perches.
 - [Parcel Chorus](https://ayyoubaha.itch.io/parcel-chorus): stateful postal routing with linked switches rather than cycling letter receipts.
 
 The common components (word puzzles, routes, postal themes, moths, undo, hints) are established ideas. The evolving per-perch stamps and necessary return visits are this candidate's central distinction.

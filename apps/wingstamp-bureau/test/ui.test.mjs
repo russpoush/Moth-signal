@@ -30,7 +30,9 @@ test('guided play completes every word and safely helps a player back from indep
   $('go-next').onclick();
   assert.match($('step-title').textContent,/collect I/);
   assert.equal($('go-next').focused,true);
+  $('go-next').focused=false;
   $('undo').onclick();
+  assert.equal($('go-next').focused,true);
   assert.match($('step-title').textContent,/collect H/);
   $('reset').onclick();
   for(let i=0;i<LEVELS.length;i++) {
@@ -52,6 +54,7 @@ test('guided play completes every word and safely helps a player back from indep
   // Guided play avoids a trap instead of leaving the player stuck.
   const paperIndex=LEVELS.findIndex(l=>l.word==='PAPER');
   $('levels').children[paperIndex].onclick();
+  assert.equal($('route-title').focused,true);
   for(let i=0;i<3;i++)$('go-next').onclick(); // Collect PAP.
   const before=$('receipt-status').textContent;
   perch('D').onclick();
@@ -66,6 +69,7 @@ test('guided play completes every word and safely helps a player back from indep
   assert.equal(saved.get('wingstamp-bureau:guided'),'off');
   perch('D').onclick();
   assert.match($('receipt-status').textContent,/Collect R/);
+  assert.equal(perch('D').focused,true);
   $('guided').checked=true;
   $('guided').onchange();
   assert.match($('go-next').textContent,/Go back/);

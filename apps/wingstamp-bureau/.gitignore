@@ -11,3 +11,5 @@ ios/App/DerivedData/
 *.jks
 *.keystore
 Wingstamp-Bureau-*.zip
+
+native-verification.json

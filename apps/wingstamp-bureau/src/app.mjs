@@ -7,6 +7,7 @@ const guideKey = 'wingstamp-bureau:guided';
 let index = 0;
 let state = initialState(LEVELS[0]);
 let history = [];
+let perchButtons = new Map();
 let hinted = null;
 let usedHint = false;
 let guided = true;
@@ -38,6 +39,10 @@ function goBack() {
   hinted = null;
   render();
   message('Back one step. Your letters and the stops are just as they were.');
+  if (!history.length) {
+    if (guided) $('go-next').focus();
+    else perchButtons.get(state.at)?.focus();
+  }
 }
 function hop(id) {
   const result = move(level(), state, id);
@@ -71,6 +76,7 @@ function hop(id) {
     message(`You are Home. There are still letters to collect. Next: ${nextLetter}.`);
   }
   if (guided) $('go-next').focus();
+  else perchButtons.get(state.at)?.focus();
 }
 function render() {
   const l = level();
@@ -100,6 +106,7 @@ function render() {
 
   const board = $('board');
   board.replaceChildren();
+  perchButtons = new Map();
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 100 100');
   svg.setAttribute('preserveAspectRatio', 'none');
@@ -146,6 +153,7 @@ function render() {
     }
     btn.onclick = () => hop(n.id);
     board.append(btn);
+    perchButtons.set(n.id, btn);
   }
   $('undo').disabled = history.length === 0;
   $('hint').disabled = done;
@@ -167,7 +175,7 @@ function render() {
     status.className = 'level-result';
     status.textContent = progress.best[item.id] ? '✓ Done' : '→';
     btn.append(number, name, status);
-    btn.onclick = () => { choose(i); $('route-title').scrollIntoView({ block: 'start' }); };
+    btn.onclick = () => { choose(i); $('route-title').focus(); $('route-title').scrollIntoView({ block: 'start' }); };
     return btn;
   }));
 }
@@ -193,5 +201,5 @@ $('hint').onclick = () => {
   render();
   message(`Try ${nodeName(hinted)} next. ${hinted === 'nest' ? 'Bring your moth Home.' : `It gives you ${stampAt(level(), state, hinted)}.`}`);
 };
-$('next').onclick = () => { choose((index + 1) % LEVELS.length); $('route-title').scrollIntoView({ block: 'start' }); };
+$('next').onclick = () => { choose((index + 1) % LEVELS.length); $('route-title').focus(); $('route-title').scrollIntoView({ block: 'start' }); };
 choose(0);

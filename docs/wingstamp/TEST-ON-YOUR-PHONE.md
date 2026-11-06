@@ -54,3 +54,7 @@ Start with **HI**. Leave **Guide me** on and tap the big green button three time
 ## What has been checked
 
 Eight Node tests validate all 24 levels, keep the first eight static, require changed-perch revisits on later routes, verify rule transitions, wrong moves, dead ends, undo state, saved progress, and a simulated touch-button UI completing all routes, guiding each hop, avoiding traps, recovering from independent-play dead ends and preserving earlier progress. The native CI separately compiles Android Debug and an unsigned iOS Simulator app. Those are build checks, not physical-device playtests. Browser visual QA and real-device touch/rotation/safe-area testing still need the devices.
+
+## Updating a debug installation
+
+Fresh CI runners or a different local computer may sign debug APKs with different keys. If Android reports `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `adb install -r` cannot replace that installation. Build with the same signing key, or uninstall the earlier test app before installing the new APK. Uninstalling may remove local progress; OS backups may later restore it. No signing key is stored in this repository.
