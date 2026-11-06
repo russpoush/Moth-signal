@@ -30,7 +30,7 @@ function choose(i) {
   hinted = null;
   usedHint = false;
   render();
-  message(index < 2 ? 'Take your time. These letters stay the same.' : 'Some letters change after you collect them. Guide me can help you all the way.');
+  message(level().practice ? 'Take your time. These letters stay the same.' : 'Some letters change after you collect them. Guide me can help you all the way.');
 }
 function goBack() {
   if (!history.length) return;
@@ -162,7 +162,7 @@ function render() {
     number.className = 'level-number';
     number.textContent = String(i + 1);
     const name = document.createElement('span');
-    name.textContent = item.word + (i < 2 ? ' · Start here' : '');
+    name.textContent = item.word + (item.practice ? ' · Easy' : '');
     const status = document.createElement('span');
     status.className = 'level-result';
     status.textContent = progress.best[item.id] ? '✓ Done' : '→';

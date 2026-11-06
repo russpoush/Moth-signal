@@ -24,7 +24,7 @@ test('guided play completes every word and safely helps a player back from indep
   assert.match(perch('A').attributes['aria-label'],/Next stop/);
   assert.equal($('hint').hidden,true);
   assert.equal($('move-count').hidden,true);
-  assert.equal($('progress').textContent,'1 of 10 delivered'); // Earlier progress survives.
+  assert.equal($('progress').textContent,'1 of 24 delivered'); // Earlier progress survives.
   perch('B').onclick(); // An unconnected stop must not lose a letter or move.
   assert.match($('receipt-status').textContent,/Collect H/);
   $('go-next').onclick();
@@ -46,8 +46,8 @@ test('guided play completes every word and safely helps a player back from indep
     assert.doesNotMatch($('result').textContent,/Best|Shortest|hops/);
     if(i<LEVELS.length-1)$('next').onclick();
   }
-  assert.equal($('progress').textContent,'10 of 10 delivered');
-  assert.equal(Object.keys(JSON.parse(saved.get('wingstamp-bureau:v1')).best).length,10);
+  assert.equal($('progress').textContent,'24 of 24 delivered');
+  assert.equal(Object.keys(JSON.parse(saved.get('wingstamp-bureau:v1')).best).length,24);
 
   // Guided play avoids a trap instead of leaving the player stuck.
   const paperIndex=LEVELS.findIndex(l=>l.word==='PAPER');
