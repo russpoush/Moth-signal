@@ -12,7 +12,7 @@ npm test
 npm run sync
 ```
 
-Use Node 22+ (24 recommended). No paid membership is needed for these local tests. The app bundles all gameplay assets, has no remote backend, and works offline. It stores only completed routes and best hop counts on the device.
+Use Node 22+ (24 recommended). No paid membership is needed for these local tests. The app bundles all gameplay assets, has no remote backend, and works offline. It stores your Guide me preference, completed routes and best hop counts on the device.
 
 ## Android phone or emulator
 
