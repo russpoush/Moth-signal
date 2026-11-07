@@ -1,0 +1,13 @@
+{
+  "appId": "com.russpoush.mothsignal",
+  "appName": "Moth Signal",
+  "webDir": "dist",
+  "backgroundColor": "#111f1b",
+  "android": {
+    "backgroundColor": "#111f1b"
+  },
+  "ios": {
+    "backgroundColor": "#111f1b",
+    "contentInset": "automatic"
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+ios/App/build/
+ios/App/DerivedData/
+*.xcuserstate
+.DS_Store
+*.jks
+*.keystore
+Moth-Signal-*.zip
+
+native-verification.json

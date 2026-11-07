@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {MORSE,WORDS,encode,timeline,isCorrect,scoreRound} from '../src/morse.mjs';
+// Independent expected fixtures transcribed from ITU-R M.1677-1 tables.
+const fixture=['.-','-...','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--','-.','---','.--.','--.-','.-.','...','-','..-','...-','.--','-..-','-.--','--..'];
+test('all 26 letters match independent international Morse fixture',()=>{fixture.forEach((expected,i)=>assert.equal(MORSE[String.fromCharCode(65+i)],expected));});
+test('all ten digits match independent fixture',()=>{['-----','.----','..---','...--','....-','.....','-....','--...','---..','----.'].forEach((v,i)=>assert.equal(MORSE[i],v));});
+test('known distress and game messages encode exactly',()=>{assert.equal(encode('SOS'),'... --- ...');assert.equal(encode(' moth '),'-- --- - ....');assert.equal(encode('LAMP'),'.-.. .- -- .--.');for(const w of WORDS)assert.match(encode(w),/^[.\- ]+$/);});
+test('reject punctuation and unsupported input',()=>{for(const v of ['', 'A B','é','!']){assert.throws(()=>encode(v));assert.throws(()=>timeline(v));}for(const v of [0,31,NaN,Infinity])assert.throws(()=>timeline('A',v));});
+test('timing uses 1:3 symbols, one-unit internal gaps and three-unit letter gaps',()=>{const {pulses,unit}=timeline('AE',12);assert.ok(Math.abs(unit-.1)<1e-10);assert.equal(pulses.length,3);assert.ok(Math.abs(pulses[1].start-.2)<1e-10);assert.ok(Math.abs(pulses[1].duration-.3)<1e-10);assert.ok(Math.abs(pulses[2].start-.8)<1e-10);});
+test('PARIS word plus following seven-unit word gap lasts 60/WPM seconds',()=>{for(const wpm of [5,8,12,18,30]){const p=timeline('PARIS',wpm);assert.ok(Math.abs(p.duration+7*p.unit-60/wpm)<1e-10);}});
+test('score, normalization and incorrect answers',()=>{assert.ok(isCorrect(' moth ','MOTH'));assert.ok(!isCorrect('MOON','MOTH'));assert.equal(scoreRound(true,false),3);assert.equal(scoreRound(true,true),1);assert.equal(scoreRound(false,false),0);});
