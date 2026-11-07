@@ -93,6 +93,19 @@ Current corrected checks and native build links are recorded in [Moth build resu
 
 The repository's mobile PR remains a draft. Builds are development artifacts on `wingstamp-mobile`, not signed store releases or a main-branch production promotion pipeline. Artifacts expire after 30 days; there is no committed signing key. Real phone audio, touch, text scaling, keyboard behavior, VoiceOver/TalkBack, rotation, safe areas, backups and enjoyment remain unverified.
 
+### Post-correction verification completed
+
+The independent mobile reviewer checked the fresh logs at source `8d5f0d46219bcfab91e72fd2b27fdfd3b4fdabd7`. Both Android APKs pass signature verification; every packaged game file matches the tested build. Both Simulator apps contain x86_64 and arm64 architectures.
+
+| App | Fresh successful run | Tests per native job | Packaged files per platform |
+| --- | --- | --- | --- |
+| Moth 0.1.1 | [42315657045](https://github.com/russpoush/Moth-signal/actions/runs/42315657045) | 13/13 | 10/10 |
+| Wingstamp 0.3.1 | [42315657325](https://github.com/russpoush/Moth-signal/actions/runs/42315657325) | 8/8 | 11/11 |
+
+The first added Android-verification attempt failed because the runner lacked ripgrep. The check was changed to locate build tools with Python's standard library; the complete corrected runs above passed. This failure and correction concern CI portability, not a failed application signature.
+
+The revised browser experiences were also deployed successfully: [Wingstamp](https://wingstamp-bureau.blondebike16.chatgpt.site), [Moth dev](https://moth-signal-dev.blondebike16.chatgpt.site), [Moth test](https://moth-signal-test.blondebike16.chatgpt.site), and [Moth production](https://moth-signal.blondebike16.chatgpt.site). Moth's built app files matched between test and production; only hosting identity and environment label differ. Native store releases remain unsubmitted.
+
 ## Marketing: defensible copy and hypotheses
 
 **Recommended lead candidate: Wingstamp Bureau.** Its changing-stamp mechanic is more distinctive than its cozy moth theme. The current eight static introductory words and default solver guidance may hide that hook or feel too easy to some players; this is a hypothesis supported by this conversation, not a representative usability study. Test an optional early changing-stamp preview and invitation to try independent planning while keeping assistance available.
@@ -126,3 +139,14 @@ No participants were recruited, and no outreach, posts, email, ads or store meta
 - Assess sustained entertainment and content value. [Apple guideline 4.2](https://developer.apple.com/app-store/review/guidelines/) and [Google functionality/content](https://support.google.com/googleplay/android-developer/answer/9898783?hl=en-GB) require meaningful value. Capacitor packaging itself does not prove acceptance or rejection. [Google's privacy policy requirement](https://support.google.com/googleplay/android-developer/answer/9859455?hl=en-en) applies even to apps that do not collect personal data.
 
 These are launch-preparation gaps, not reasons to stop private testing. No evidence currently supports a revenue forecast, market-size estimate, paid acquisition recommendation or claim of product-market fit.
+
+## Artifact integrity metadata
+
+GitHub-reported ZIP digests, independently checked by the mobile reviewer. These identify artifact ZIPs, not a separately downloaded APK hash.
+
+| Artifact | ID | SHA256 |
+| --- | --- | --- |
+| Moth Android | 13550024971 | `800b2477108feef4fc82f8d4325eb7f18d4271b97025a5a3e8b8fe3f1fd66e83` |
+| Moth Simulator | 13550616917 | `12f4fd7e35ad134e587844f711482fce99ce46274264cde3cef21a008fbfed39` |
+| Wingstamp Android | 13550856020 | `b854e6db04c53c2c9c45141cb7112102c5f194986b49221fc23db1987d4fcff3` |
+| Wingstamp Simulator | 13551150497 | `fb149eb4b135f707f3850562da06a60457f760173d298e5546707eb1c3c5b1cf` |
