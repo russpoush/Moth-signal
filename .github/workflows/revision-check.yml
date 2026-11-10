@@ -1,0 +1,20 @@
+name: Verify Night Shift revision
+on:
+  push:
+    paths: ['revision/**', '.github/workflows/revision-check.yml']
+  pull_request:
+    paths: ['revision/**', '.github/workflows/revision-check.yml']
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: revision
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm test
+      - run: npm run build
+      - run: git diff --exit-code -- dist
